@@ -1,6 +1,21 @@
+import axios from 'axios';
 import '../../index.css'
+import { useState } from 'react';
 
 export function SearchBar() {
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
+
+  const handleSearch = async function() {
+    try {
+      const response = await axios.get(`http://universities.hipolabs.com/search?country=${country}&city=${city}`);
+      const univesities = response.data
+      console.log(univesities)
+    } catch (error) {
+      console.error("Request error!", error);
+    }
+  }
+
   return (
     <div className="flex items-center">
       <div className="flex space-x-1">
