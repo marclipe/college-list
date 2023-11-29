@@ -1,6 +1,7 @@
 import axios from 'axios';
 import '../../index.css'
 import { useEffect, useState } from 'react';
+import imageCollege from '../../assets/img/image-college.svg'
 
 interface UniversityDetails {
   name: string;
@@ -15,8 +16,10 @@ export function SearchBar() {
   const [universitySuggestions, setUniversitySuggestions] = useState<string[]>(
     []
   );
+  const [loading, setLoading] = useState(false)
+
   const [universityDetails, setUniversityDetails] =
-    useState<UniversityDetails | null>(null);
+    useState<UniversityDetails[] | null>([]);
 
     useEffect(() => {
       loadCountrySuggestions();
@@ -49,24 +52,27 @@ export function SearchBar() {
 
   const handleSearch = async function() {
     try {
+      setLoading(true)
       const response = await axios.get(
         `http://universities.hipolabs.com/search?name=${universityName}&country=${country}`
       );
-      const univesities: UniversityDetails[] = response.data;
+      const universities: UniversityDetails[] = response.data;
       
-      if (univesities.length > 0) {
-        setUniversityDetails(univesities[0]);
+      if (universities.length > 0) {
+        setUniversityDetails([universities[0]]);
       } else {
         setUniversityDetails(null);
       }
 
-      console.log(univesities)
+      console.log(universities)
     } catch (error) {
       console.error("Request error!", error);
+    } finally {
+      setLoading(false);
     }
   }
 
-  console.log(universityDetails?.name)
+  // console.log(universityDetails?.name)
   return (
     <section>
       <div className="flex items-center">
@@ -118,21 +124,35 @@ export function SearchBar() {
           </button>
         </div>
       </div>
-      <div className="flex justify-center mt-10">
-        {universityDetails && (
-          <div className="flex items-center flex-col bg-indigo-700 rounded p-5 text-white">
-            <h2>University Details</h2>
-            <p>Name: {universityDetails.name}</p>
-            <p>Country: {universityDetails.country}</p>
-            <a
-              className="bg-white text-black font-bold py-2 px-4 rounded mt-2"
-              href={universityDetails.web_pages}
+
+      {loading && (
+        <div className="flex items-center justify-center mt-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500 border-r-2 border-b-2 border-l-2"></div>
+          <span className="ml-2 text-gray-600">Loading...</span>
+        </div>
+      )}
+
+      <div className="flex justify-center mt-10 pb-16">
+        {universityDetails &&
+          universityDetails.map((university, index) => (
+            <div
+              key={index}
+              className="flex items-center flex-col bg-indigo-700 rounded p-10 text-white"
             >
-              Web site
-            </a>
-            {/* <img src={universityDetails.web_pages} alt="" /> */}
-          </div>
-        )}
+              <img className="w-full" src={imageCollege} alt="" />
+              <h2 className="text-[1.5rem] font-bold">University Details</h2>
+              <p>Name: {university.name}</p>
+              <p>Country: {university.country}</p>
+              <a
+                className="bg-white text-black font-bold py-2 px-4 rounded mt-6"
+                href={university.web_pages}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Web site
+              </a>
+            </div>
+          ))}
       </div>
     </section>
   );
