@@ -7,6 +7,7 @@ import { Home } from './pages/Home/Home';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
+import { NoPage } from './pages/NoPage/NodePage';
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
           <Routes>
             <Route index element={<Home />} />
             <Route path="/search" element={<Search />} />
-            {/* <Route path='*' element={}/> */}
+            <Route path="*" element={<NoPage />} />
           </Routes>
         </Provider>
       </BrowserRouter>

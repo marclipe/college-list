@@ -3,7 +3,7 @@ import imageUniversity from '../../assets/img/university-home.svg'
 
 export function Home() {
   return (
-    <main className="flex justify-center flex-col items-center h-screen">
+    <main className="container-home flex justify-center flex-col items-center h-screen">
       <img
         className="w-[600px] rounded-[10px]"
         src={imageUniversity}

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { SetBreadcrumbsAction } from "../../redux/breadcrumb/action";
 import { RootState } from "../../redux/root-reducer";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 interface BreadcrumbProps {
   segment: string;
@@ -20,6 +21,7 @@ export const Breadcrumbs = () => {
     state.breadcrumbs.map((path) => ({
       segment: path,
       path,
+      destination: ""
     }))
   ) as BreadcrumbProps[];
 
@@ -27,7 +29,7 @@ export const Breadcrumbs = () => {
     const pathSegments = location.pathname.split("/").filter((segment) => segment !== "");
 
     const newBreadcrumbs: BreadcrumbProps[] = pathSegments.map((segment, index) => {
-      const path = `/${pathSegments.slice(0, index + 1).join("/")}`;
+      const path = `${pathSegments.slice(0, index + 1).join("/")}`;
       const destination = pathSegments[index];
       return { segment, path, destination };
     });
@@ -44,15 +46,26 @@ export const Breadcrumbs = () => {
     navigate(path);
   };
 
+  //not work in home
+  const isHome = location.pathname === "/";
+  const containerClass = isHome ? "" : "container-breadcrumbs";
+
   return (
-    <div>
+    <div className={containerClass}>
       {breadcrumbs.map((breadcrumb, index) => (
         <span key={index}>
           {index > 0 && "/"}
-          <Link to="" onClick={() => handleBreadcrumbClick(breadcrumb.path)}>
-            {/* {breadcrumb.segment} */}
-            {index === 0 ? "home" : breadcrumb.segment}
-          </Link>
+          <div className="@apply flex items-center">
+            <Link to="" onClick={() => handleBreadcrumbClick(breadcrumb.path)}>
+              <p className="text-[white] font-semibold">
+                {index === 0 ? "home" : breadcrumb.segment}
+              </p>
+            </Link>
+            <p>
+              <MdKeyboardArrowRight size={24} />
+            </p>
+            {breadcrumb.segment}
+          </div>
         </span>
       ))}
     </div>
