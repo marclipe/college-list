@@ -6,12 +6,14 @@ import { Home } from './pages/Home/Home';
 
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
+import { Breadcrumbs } from './components/Breadcrumbs/Breadcrumbs';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <Provider store={store}>
+          <Breadcrumbs />
           <Routes>
             <Route index element={<Home />} />
             <Route path="/search" element={<Search />} />

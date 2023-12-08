@@ -71,8 +71,7 @@ export function SearchBar() {
       setLoading(false);
     }
   }
-
-  // console.log(universityDetails?.name)
+  
   return (
     <section>
       <div className="flex items-center">
