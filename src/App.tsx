@@ -4,15 +4,20 @@ import './index.css'
 import { Search } from './pages/Search/Search';
 import { Home } from './pages/Home/Home';
 
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route index element={<Home/>}/>
-          <Route path='/search' element={<Search/>} />
-          {/* <Route path='*' element={}/> */}
-        </Routes>
+        <Provider store={store}>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/search" element={<Search />} />
+            {/* <Route path='*' element={}/> */}
+          </Routes>
+        </Provider>
       </BrowserRouter>
     </div>
   );
