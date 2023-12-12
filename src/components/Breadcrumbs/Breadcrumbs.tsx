@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { SetBreadcrumbsAction } from "../../redux/breadcrumb/action";
 import { RootState } from "../../redux/root-reducer";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { ArrowCircleRight } from "@phosphor-icons/react";
 
 interface BreadcrumbProps {
   segment: string;
@@ -55,13 +55,15 @@ export const Breadcrumbs = () => {
       {breadcrumbs.map((breadcrumb, index) => (
         <span key={index}>
           {index > 0 && "/"}
-          <div className="@apply flex items-center">
+          <div className="@apply flex items-center gap-1">
             <Link to="" onClick={() => handleBreadcrumbClick(breadcrumb.path)}>
               <p className="text-[white] font-semibold">
                 {index === 0 ? "home" : breadcrumb.segment}
               </p>
             </Link>
-            <MdKeyboardArrowRight size={24} />
+            <p>
+              <ArrowCircleRight size={20} weight="fill" />
+            </p>
             {breadcrumb.segment}
           </div>
         </span>
