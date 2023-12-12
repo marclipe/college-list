@@ -61,9 +61,7 @@ export const Breadcrumbs = () => {
                 {index === 0 ? "home" : breadcrumb.segment}
               </p>
             </Link>
-            <p>
-              <MdKeyboardArrowRight size={24} />
-            </p>
+            <MdKeyboardArrowRight size={24} />
             {breadcrumb.segment}
           </div>
         </span>
